@@ -1,160 +1,765 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Cart – VELORA</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:#F8F5F2;color:#2D2D2D;font-family:'Poppins',sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
-img{display:block;width:100%;object-fit:cover}
-a{color:inherit;text-decoration:none}
-h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
-.navbar{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 1px 0 #E8E4DE,0 2px 16px rgba(0,0,0,.05);height:64px;display:flex;align-items:center}
-.nav-inner{max-width:1280px;margin:0 auto;width:100%;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:.12em}
-.nav-links{display:flex;align-items:center;gap:36px}
-.nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#6B6B6B;transition:color .2s}
-.nav-links a:hover,.nav-links a.active{color:#2D2D2D}
-.cart-wrap{position:relative;display:inline-flex;align-items:center}
-.cart-badge{position:absolute;top:-8px;right:-10px;background:#C8A97E;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
-.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
-.hamburger span{display:block;width:24px;height:2px;background:#2D2D2D;margin:5px 0}
-.mobile-menu{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;border-top:1px solid #E8E4DE;padding:16px 32px 24px;box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:99}
-.mobile-menu.open{display:flex}
-.mobile-menu a{padding:12px 0;border-bottom:1px solid #E8E4DE;font-size:14px;font-weight:500;color:#2D2D2D}
-.mobile-menu a:last-child{border:none}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 28px;background:#C8A97E;color:#fff;border:none;border-radius:6px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s;text-decoration:none}
-.btn:hover{background:#B89666;transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,169,126,.32)}
-.btn-outline{background:transparent;color:#2D2D2D;border:1.5px solid #E8E4DE}
-.btn-outline:hover{background:#F8F5F2;border-color:#C8A97E;color:#C8A97E;box-shadow:none}
-.btn-sm{padding:9px 18px;font-size:12px}
-.btn-lg{padding:15px 36px;font-size:14px}
-.section-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C8A97E;margin-bottom:10px}
-/* Cart page */
-.cart-page{max-width:1280px;margin:0 auto;padding:48px 32px 96px}
-.cart-page h1{font-size:clamp(28px,4vw,42px);margin-bottom:8px}
-.cart-sub{color:#6B6B6B;font-size:14px;margin-bottom:48px}
-.cart-layout{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start}
-.cart-item{display:grid;grid-template-columns:100px 1fr auto;gap:20px;align-items:center;background:#fff;border:1px solid #E8E4DE;border-radius:12px;padding:20px;margin-bottom:16px;transition:box-shadow .2s}
-.cart-item:hover{box-shadow:0 4px 20px rgba(0,0,0,.07)}
-.cart-img{aspect-ratio:3/4;border-radius:8px;overflow:hidden}
-.cart-img img{width:100%;height:100%;object-fit:cover}
-.item-name{font-family:'Poppins',sans-serif;font-size:15px;font-weight:500;margin-bottom:6px}
-.size-tag{font-size:12px;color:#6B6B6B;background:#F8F5F2;padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:12px}
-.item-price{font-size:16px;font-weight:600}
-.qty-sm{display:flex;align-items:center;border:1.5px solid #E8E4DE;border-radius:8px;overflow:hidden;width:fit-content;margin-top:12px}
-.qty-sm button{width:32px;height:36px;background:none;border:none;font-size:16px;cursor:pointer;color:#2D2D2D}
-.qty-sm button:hover{background:#F8F5F2}
-.qty-sm span{width:36px;text-align:center;font-size:14px;font-weight:500}
-.remove-btn{background:none;border:none;cursor:pointer;color:#6B6B6B;font-size:18px;padding:8px;border-radius:6px;transition:color .2s,background .2s;align-self:flex-start}
-.remove-btn:hover{color:#e74c3c;background:rgba(231,76,60,.08)}
-.order-summary{background:#fff;border:1px solid #E8E4DE;border-radius:16px;padding:28px;position:sticky;top:88px}
-.order-summary h3{font-family:'Poppins',sans-serif;font-size:16px;font-weight:600;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #E8E4DE}
-.sum-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:14px;color:#6B6B6B}
-.sum-row .val{color:#2D2D2D;font-weight:500}
-.sum-row.total{font-size:17px;font-weight:700;color:#2D2D2D;padding-top:16px;margin-top:8px;border-top:1px solid #E8E4DE;margin-bottom:24px}
-.promo-row{display:flex;gap:8px;margin-bottom:20px}
-.promo-row input{flex:1;padding:10px 14px;border:1.5px solid #E8E4DE;border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;color:#2D2D2D;background:#fff}
-.promo-row input:focus{border-color:#C8A97E}
-.trust-badges{display:flex;flex-direction:column;gap:10px;margin-top:20px;padding-top:20px;border-top:1px solid #E8E4DE}
-.trust-badge{display:flex;gap:10px;align-items:center;font-size:12px;color:#6B6B6B}
-.empty-cart{text-align:center;padding:96px 32px}
-.empty-icon{font-size:64px;margin-bottom:24px}
-.empty-cart h2{font-size:28px;margin-bottom:12px}
-.empty-cart p{color:#6B6B6B;margin-bottom:32px}
-footer{background:#2D2D2D;color:#c8c8c8;padding:64px 32px 32px}
-.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:48px}
-.footer-logo{font-family:'Playfair Display',serif;font-size:24px;color:#fff;letter-spacing:.12em;margin-bottom:14px}
-.footer-brand p{font-size:14px;color:#999;line-height:1.7;max-width:240px}
-footer h4{font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:16px}
-footer ul{list-style:none}
-footer ul li{margin-bottom:10px}
-footer ul li a{font-size:14px;color:#999;transition:color .2s}
-footer ul li a:hover{color:#C8A97E}
-.footer-bottom{max-width:1280px;margin:48px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.footer-bottom p{font-size:13px;color:#666}
-.social-icons{display:flex;gap:14px}
-.social-icons a{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;transition:background .2s,color .2s}
-.social-icons a:hover{background:#C8A97E;border-color:#C8A97E;color:#fff}
-@media(max-width:900px){.cart-layout{grid-template-columns:1fr}.order-summary{position:static}}
-@media(max-width:640px){.cart-page{padding:32px 20px 64px}.cart-item{grid-template-columns:80px 1fr auto;gap:14px;padding:16px}.nav-inner{padding:0 20px}.nav-links{display:none}.hamburger{display:block}.footer-inner{grid-template-columns:1fr!important;gap:28px}}
-</style>
-</head>
-<body>
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">VELORA</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a><a href="products.html">Products</a>
-      <a href="cart.html" class="active" style="position:relative">Cart<span class="cart-badge" style="position:absolute;top:-8px;right:-16px">0</span></a>
-      <a href="login.html" class="btn btn-sm">Login</a>
-    </div>
-    <div style="display:flex;align-items:center;gap:16px">
-      <button class="hamburger" id="menuToggle"><span></span><span></span><span></span></button>
-    </div>
-  </div>
-  <div class="mobile-menu" id="mobileMenu"><a href="index.html">Home</a><a href="products.html">Products</a><a href="cart.html">Cart</a><a href="login.html">Login</a></div>
-</nav>
-<main class="cart-page">
-  <div class="section-label">My Bag</div>
-  <h1>Shopping Cart</h1>
-  <p class="cart-sub" id="cartSub"></p>
-  <div id="cartMain"></div>
-</main>
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand"><div class="footer-logo">VELORA</div><p>Premium fashion for the modern wardrobe.</p></div>
-    <div><h4>Shop</h4><ul><li><a href="products.html">All Products</a></li></ul></div>
-    <div><h4>Help</h4><ul><li><a href="#">Return Policy</a></li><li><a href="#">Contact</a></li></ul></div>
-    <div><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
-  </div>
-  <div class="footer-bottom"><p>© 2025 VELORA. All rights reserved.</p><div class="social-icons"><a href="#">IG</a><a href="#">Pi</a><a href="#">Tw</a></div></div>
-</footer>
-<script>
-function getCart(){return JSON.parse(localStorage.getItem('velora_cart')||'[]')}
-function saveCart(c){localStorage.setItem('velora_cart',JSON.stringify(c));updateBadge();renderCart()}
-function updateBadge(){const n=getCart().reduce(function(s,i){return s+i.qty},0);document.querySelectorAll('.cart-badge').forEach(function(el){el.textContent=n;el.style.display=n>0?'flex':'none'})}
-function toast(msg){const e=document.querySelector('.v-toast');if(e)e.remove();const t=document.createElement('div');t.className='v-toast';t.innerHTML='✓ '+msg;t.style.cssText='position:fixed;bottom:32px;right:32px;z-index:9999;background:#2D2D2D;color:#fff;padding:14px 22px;border-radius:8px;font-family:Poppins,sans-serif;font-size:14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.18)';document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){t.remove()},300)},2500)}
-document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('mobileMenu').classList.toggle('open')});
-updateBadge();
-function renderCart(){
-  var cart=getCart();
-  var main=document.getElementById('cartMain');
-  if(cart.length===0){
-    document.getElementById('cartSub').textContent='';
-    main.innerHTML='<div class="empty-cart"><div class="empty-icon">🛍️</div><h2>Your cart is empty</h2><p>Looks like you have not added anything yet.</p><a href="products.html" class="btn btn-lg">Browse Products</a></div>';
-    return;
-  }
-  var total=cart.reduce(function(s,i){return s+i.qty},0);
-  document.getElementById('cartSub').textContent=total+' item'+(total!==1?'s':'')+' in your cart';
-  var subtotal=cart.reduce(function(s,i){return s+i.price*i.qty},0);
-  var shipping=subtotal>=2999?0:149;
-  var grandTotal=subtotal+shipping;
-  var itemsHtml=cart.map(function(item){
-    return '<div class="cart-item">'
-    +'<div class="cart-img"><img src="'+item.image+'" alt="'+item.name+'" loading="lazy"/></div>'
-    +'<div><div class="item-name">'+item.name+'</div><span class="size-tag">Size: '+item.size+'</span>'
-    +'<div class="item-price">₹'+(item.price*item.qty).toLocaleString()+'</div>'
-    +'<div class="qty-sm"><button onclick="updQty('+item.id+',\''+item.size+'\',-1)">−</button><span>'+item.qty+'</span><button onclick="updQty('+item.id+',\''+item.size+'\',1)">+</button></div></div>'
-    +'<button class="remove-btn" onclick="remItem('+item.id+',\''+item.size+'\')">✕</button></div>';
-  }).join('');
-  main.innerHTML='<div class="cart-layout"><div class="cart-items">'+itemsHtml+'</div>'
-  +'<div class="order-summary"><h3>Order Summary</h3>'
-  +'<div class="sum-row"><span>Subtotal</span><span class="val">₹'+subtotal.toLocaleString()+'</span></div>'
-  +'<div class="sum-row"><span>Shipping</span><span class="val">'+(shipping===0?'<span style="color:#27ae60">Free</span>':'₹'+shipping)+'</span></div>'
-  +(shipping>0?'<div style="font-size:12px;color:#C8A97E;margin-bottom:12px">Add ₹'+(2999-subtotal).toLocaleString()+' more for free shipping</div>':'')
-  +'<div class="promo-row"><input type="text" placeholder="Promo code" id="promoIn"/><button class="btn btn-sm btn-outline" onclick="applyPromo()">Apply</button></div>'
-  +'<div class="sum-row total"><span>Total</span><span>₹'+grandTotal.toLocaleString()+'</span></div>'
-  +'<a href="checkout.html" class="btn" style="width:100%;justify-content:center">Proceed to Checkout</a>'
-  +'<div class="trust-badges"><div class="trust-badge"><span>🔒</span><span>Secure checkout</span></div><div class="trust-badge"><span>↩️</span><span>Free 30-day returns</span></div><div class="trust-badge"><span>🚚</span><span>Free shipping above ₹2999</span></div></div>'
-  +'</div></div>';
-}
-function updQty(id,size,d){var cart=getCart();var item=cart.find(function(i){return i.id===id&&i.size===size});if(!item)return;item.qty=Math.max(1,item.qty+d);saveCart(cart)}
-function remItem(id,size){var cart=getCart().filter(function(i){return!(i.id===id&&i.size===size)});saveCart(cart)}
-function applyPromo(){var code=document.getElementById('promoIn')?document.getElementById('promoIn').value:'';toast(code?'Code "'+code+'" is invalid':'Please enter a promo code')}
-renderCart();
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Cart – VELORA</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: #f8f5f2;
+        color: #2d2d2d;
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Playfair Display", serif;
+        line-height: 1.2;
+      }
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        box-shadow:
+          0 1px 0 #e8e4de,
+          0 2px 16px rgba(0, 0, 0, 0.05);
+        height: 64px;
+        display: flex;
+        align-items: center;
+      }
+      .nav-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+      }
+      .nav-links a {
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #6b6b6b;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #2d2d2d;
+      }
+      .cart-wrap {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+      }
+      .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        background: #c8a97e;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #2d2d2d;
+        margin: 5px 0;
+      }
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-top: 1px solid #e8e4de;
+        padding: 16px 32px 24px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        z-index: 99;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        padding: 12px 0;
+        border-bottom: 1px solid #e8e4de;
+        font-size: 14px;
+        font-weight: 500;
+        color: #2d2d2d;
+      }
+      .mobile-menu a:last-child {
+        border: none;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 28px;
+        background: #c8a97e;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+        text-decoration: none;
+      }
+      .btn:hover {
+        background: #b89666;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(200, 169, 126, 0.32);
+      }
+      .btn-outline {
+        background: transparent;
+        color: #2d2d2d;
+        border: 1.5px solid #e8e4de;
+      }
+      .btn-outline:hover {
+        background: #f8f5f2;
+        border-color: #c8a97e;
+        color: #c8a97e;
+        box-shadow: none;
+      }
+      .btn-sm {
+        padding: 9px 18px;
+        font-size: 12px;
+      }
+      .btn-lg {
+        padding: 15px 36px;
+        font-size: 14px;
+      }
+      .section-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #c8a97e;
+        margin-bottom: 10px;
+      }
+      /* Cart page */
+      .cart-page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 32px 96px;
+      }
+      .cart-page h1 {
+        font-size: clamp(28px, 4vw, 42px);
+        margin-bottom: 8px;
+      }
+      .cart-sub {
+        color: #6b6b6b;
+        font-size: 14px;
+        margin-bottom: 48px;
+      }
+      .cart-layout {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 40px;
+        align-items: start;
+      }
+      .cart-item {
+        display: grid;
+        grid-template-columns: 100px 1fr auto;
+        gap: 20px;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #e8e4de;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        transition: box-shadow 0.2s;
+      }
+      .cart-item:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+      }
+      .cart-img {
+        aspect-ratio: 3/4;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .cart-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .item-name {
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .size-tag {
+        font-size: 12px;
+        color: #6b6b6b;
+        background: #f8f5f2;
+        padding: 3px 10px;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+      .item-price {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .qty-sm {
+        display: flex;
+        align-items: center;
+        border: 1.5px solid #e8e4de;
+        border-radius: 8px;
+        overflow: hidden;
+        width: fit-content;
+        margin-top: 12px;
+      }
+      .qty-sm button {
+        width: 32px;
+        height: 36px;
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        color: #2d2d2d;
+      }
+      .qty-sm button:hover {
+        background: #f8f5f2;
+      }
+      .qty-sm span {
+        width: 36px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .remove-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #6b6b6b;
+        font-size: 18px;
+        padding: 8px;
+        border-radius: 6px;
+        transition:
+          color 0.2s,
+          background 0.2s;
+        align-self: flex-start;
+      }
+      .remove-btn:hover {
+        color: #e74c3c;
+        background: rgba(231, 76, 60, 0.08);
+      }
+      .order-summary {
+        background: #fff;
+        border: 1px solid #e8e4de;
+        border-radius: 16px;
+        padding: 28px;
+        position: sticky;
+        top: 88px;
+      }
+      .order-summary h3 {
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e8e4de;
+      }
+      .sum-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        font-size: 14px;
+        color: #6b6b6b;
+      }
+      .sum-row .val {
+        color: #2d2d2d;
+        font-weight: 500;
+      }
+      .sum-row.total {
+        font-size: 17px;
+        font-weight: 700;
+        color: #2d2d2d;
+        padding-top: 16px;
+        margin-top: 8px;
+        border-top: 1px solid #e8e4de;
+        margin-bottom: 24px;
+      }
+      .promo-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .promo-row input {
+        flex: 1;
+        padding: 10px 14px;
+        border: 1.5px solid #e8e4de;
+        border-radius: 8px;
+        font-family: "Poppins", sans-serif;
+        font-size: 13px;
+        outline: none;
+        color: #2d2d2d;
+        background: #fff;
+      }
+      .promo-row input:focus {
+        border-color: #c8a97e;
+      }
+      .trust-badges {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e8e4de;
+      }
+      .trust-badge {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 12px;
+        color: #6b6b6b;
+      }
+      .empty-cart {
+        text-align: center;
+        padding: 96px 32px;
+      }
+      .empty-icon {
+        font-size: 64px;
+        margin-bottom: 24px;
+      }
+      .empty-cart h2 {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+      .empty-cart p {
+        color: #6b6b6b;
+        margin-bottom: 32px;
+      }
+      footer {
+        background: #2d2d2d;
+        color: #c8c8c8;
+        padding: 64px 32px 32px;
+      }
+      .footer-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.5fr repeat(3, 1fr);
+        gap: 48px;
+      }
+      .footer-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        color: #fff;
+        letter-spacing: 0.12em;
+        margin-bottom: 14px;
+      }
+      .footer-brand p {
+        font-size: 14px;
+        color: #999;
+        line-height: 1.7;
+        max-width: 240px;
+      }
+      footer h4 {
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 16px;
+      }
+      footer ul {
+        list-style: none;
+      }
+      footer ul li {
+        margin-bottom: 10px;
+      }
+      footer ul li a {
+        font-size: 14px;
+        color: #999;
+        transition: color 0.2s;
+      }
+      footer ul li a:hover {
+        color: #c8a97e;
+      }
+      .footer-bottom {
+        max-width: 1280px;
+        margin: 48px auto 0;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .footer-bottom p {
+        font-size: 13px;
+        color: #666;
+      }
+      .social-icons {
+        display: flex;
+        gap: 14px;
+      }
+      .social-icons a {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 14px;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .social-icons a:hover {
+        background: #c8a97e;
+        border-color: #c8a97e;
+        color: #fff;
+      }
+      @media (max-width: 900px) {
+        .cart-layout {
+          grid-template-columns: 1fr;
+        }
+        .order-summary {
+          position: static;
+        }
+      }
+      @media (max-width: 640px) {
+        .cart-page {
+          padding: 32px 20px 64px;
+        }
+        .cart-item {
+          grid-template-columns: 80px 1fr auto;
+          gap: 14px;
+          padding: 16px;
+        }
+        .nav-inner {
+          padding: 0 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: block;
+        }
+        .footer-inner {
+          grid-template-columns: 1fr !important;
+          gap: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">VELORA</a>
+        <div class="nav-links">
+          <a href="index.html">Home</a><a href="products.html">Products</a>
+          <a href="cart.html" class="active" style="position: relative"
+            >Cart<span
+              class="cart-badge"
+              style="position: absolute; top: -8px; right: -16px"
+              >0</span
+            ></a
+          >
+          <a href="login.html" class="btn btn-sm" id="authLink">Login</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px">
+          <button class="hamburger" id="menuToggle">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a><a href="products.html">Products</a
+        ><a href="cart.html">Cart</a><a href="login.html" id="mobileAuthLink">Login</a>
+      </div>
+    </nav>
+    <main class="cart-page">
+      <div class="section-label">My Bag</div>
+      <h1>Shopping Cart</h1>
+      <p class="cart-sub" id="cartSub"></p>
+      <div id="cartMain"></div>
+    </main>
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">VELORA</div>
+          <p>Premium fashion for the modern wardrobe.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="products.html">All Products</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 VELORA. All rights reserved.</p>
+        <div class="social-icons">
+          <a href="#">IG</a><a href="#">Pi</a><a href="#">Tw</a>
+        </div>
+      </div>
+    </footer>
+    <script>
+      function getCart() {
+        return JSON.parse(localStorage.getItem("velora_cart") || "[]");
+      }
+      function saveCart(c) {
+        localStorage.setItem("velora_cart", JSON.stringify(c));
+        updateBadge();
+        renderCart();
+      }
+      function updateBadge() {
+        const n = getCart().reduce(function (s, i) {
+          return s + i.qty;
+        }, 0);
+        document.querySelectorAll(".cart-badge").forEach(function (el) {
+          el.textContent = n;
+          el.style.display = n > 0 ? "flex" : "none";
+        });
+      }
+      function toast(msg) {
+        const e = document.querySelector(".v-toast");
+        if (e) e.remove();
+        const t = document.createElement("div");
+        t.className = "v-toast";
+        t.innerHTML = "✓ " + msg;
+        t.style.cssText =
+          "position:fixed;bottom:32px;right:32px;z-index:9999;background:#2D2D2D;color:#fff;padding:14px 22px;border-radius:8px;font-family:Poppins,sans-serif;font-size:14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.18)";
+        document.body.appendChild(t);
+        setTimeout(function () {
+          t.style.opacity = "0";
+          t.style.transition = "opacity .3s";
+          setTimeout(function () {
+            t.remove();
+          }, 300);
+        }, 2500);
+      }
+      function getUser() {
+        try {
+          return JSON.parse(localStorage.getItem("velora_user") || "{}");
+        } catch (e) {
+          return {};
+        }
+      }
+      function syncAuthLinks() {
+        const user = getUser();
+        const loggedIn = user && user.loggedIn;
+        const link = document.getElementById("authLink");
+        const mobile = document.getElementById("mobileAuthLink");
+        if (loggedIn) {
+          if (link) {
+            link.textContent = "Account";
+            link.href = "profile.html";
+          }
+          if (mobile) {
+            mobile.textContent = "Account";
+            mobile.href = "profile.html";
+          }
+        } else {
+          if (link) {
+            link.textContent = "Login";
+            link.href = "login.html";
+          }
+          if (mobile) {
+            mobile.textContent = "Login";
+            mobile.href = "login.html";
+          }
+        }
+      }
+      document
+        .getElementById("menuToggle")
+        .addEventListener("click", function () {
+          document.getElementById("mobileMenu").classList.toggle("open");
+        });
+      updateBadge();
+      syncAuthLinks();
+      function renderCart() {
+        var cart = getCart();
+        var main = document.getElementById("cartMain");
+        if (cart.length === 0) {
+          document.getElementById("cartSub").textContent = "";
+          main.innerHTML =
+            '<div class="empty-cart"><div class="empty-icon">🛍️</div><h2>Your cart is empty</h2><p>Looks like you have not added anything yet.</p><a href="products.html" class="btn btn-lg">Browse Products</a></div>';
+          return;
+        }
+        var total = cart.reduce(function (s, i) {
+          return s + i.qty;
+        }, 0);
+        document.getElementById("cartSub").textContent =
+          total + " item" + (total !== 1 ? "s" : "") + " in your cart";
+        var subtotal = cart.reduce(function (s, i) {
+          return s + i.price * i.qty;
+        }, 0);
+        var shipping = subtotal >= 2999 ? 0 : 149;
+        var grandTotal = subtotal + shipping;
+        var itemsHtml = cart
+          .map(function (item) {
+            return (
+              '<div class="cart-item">' +
+              '<div class="cart-img"><img src="' +
+              item.image +
+              '" alt="' +
+              item.name +
+              '" loading="lazy"/></div>' +
+              '<div><div class="item-name">' +
+              item.name +
+              '</div><span class="size-tag">Size: ' +
+              item.size +
+              "</span>" +
+              '<div class="item-price">₹' +
+              (item.price * item.qty).toLocaleString() +
+              "</div>" +
+              '<div class="qty-sm"><button onclick="updQty(' +
+              item.id +
+              ",'" +
+              item.size +
+              "',-1)\">−</button><span>" +
+              item.qty +
+              '</span><button onclick="updQty(' +
+              item.id +
+              ",'" +
+              item.size +
+              "',1)\">+</button></div></div>" +
+              '<button class="remove-btn" onclick="remItem(' +
+              item.id +
+              ",'" +
+              item.size +
+              "')\">✕</button></div>"
+            );
+          })
+          .join("");
+        main.innerHTML =
+          '<div class="cart-layout"><div class="cart-items">' +
+          itemsHtml +
+          "</div>" +
+          '<div class="order-summary"><h3>Order Summary</h3>' +
+          '<div class="sum-row"><span>Subtotal</span><span class="val">₹' +
+          subtotal.toLocaleString() +
+          "</span></div>" +
+          '<div class="sum-row"><span>Shipping</span><span class="val">' +
+          (shipping === 0
+            ? '<span style="color:#27ae60">Free</span>'
+            : "₹" + shipping) +
+          "</span></div>" +
+          (shipping > 0
+            ? '<div style="font-size:12px;color:#C8A97E;margin-bottom:12px">Add ₹' +
+              (2999 - subtotal).toLocaleString() +
+              " more for free shipping</div>"
+            : "") +
+          '<div class="promo-row"><input type="text" placeholder="Promo code" id="promoIn"/><button class="btn btn-sm btn-outline" onclick="applyPromo()">Apply</button></div>' +
+          '<div class="sum-row total"><span>Total</span><span>₹' +
+          grandTotal.toLocaleString() +
+          "</span></div>" +
+          '<a href="checkout.html" class="btn" style="width:100%;justify-content:center">Proceed to Checkout</a>' +
+          '<div class="trust-badges"><div class="trust-badge"><span>🔒</span><span>Secure checkout</span></div><div class="trust-badge"><span>↩️</span><span>Free 30-day returns</span></div><div class="trust-badge"><span>🚚</span><span>Free shipping above ₹2999</span></div></div>' +
+          "</div></div>";
+      }
+      function updQty(id, size, d) {
+        var cart = getCart();
+        var item = cart.find(function (i) {
+          return i.id === id && i.size === size;
+        });
+        if (!item) return;
+        item.qty = Math.max(1, item.qty + d);
+        saveCart(cart);
+      }
+      function remItem(id, size) {
+        var cart = getCart().filter(function (i) {
+          return !(i.id === id && i.size === size);
+        });
+        saveCart(cart);
+      }
+      function applyPromo() {
+        var code = document.getElementById("promoIn")
+          ? document.getElementById("promoIn").value
+          : "";
+        toast(
+          code ? 'Code "' + code + '" is invalid' : "Please enter a promo code",
+        );
+      }
+      renderCart();
+    </script>
+  </body>
 </html>

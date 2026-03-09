@@ -1,0 +1,1076 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>My Account &ndash; VELORA</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #f8f5f2;
+        color: #2d2d2d;
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", serif;
+        line-height: 1.2;
+      }
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        box-shadow:
+          0 1px 0 #e8e4de,
+          0 2px 16px rgba(0, 0, 0, 0.05);
+        height: 64px;
+        display: flex;
+        align-items: center;
+      }
+      .nav-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+      }
+      .nav-links a {
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #6b6b6b;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #2d2d2d;
+      }
+      .cart-wrap {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+      }
+      .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        background: #c8a97e;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #2d2d2d;
+        margin: 5px 0;
+      }
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-top: 1px solid #e8e4de;
+        padding: 16px 32px 24px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        z-index: 99;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        padding: 12px 0;
+        border-bottom: 1px solid #e8e4de;
+        font-size: 14px;
+        font-weight: 500;
+        color: #2d2d2d;
+      }
+      .mobile-menu a:last-child {
+        border: none;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 28px;
+        background: #c8a97e;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        background: #b89666;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(200, 169, 126, 0.32);
+      }
+      .btn-outline {
+        background: transparent;
+        color: #2d2d2d;
+        border: 1.5px solid #e8e4de;
+      }
+      .btn-outline:hover {
+        background: #f8f5f2;
+        border-color: #c8a97e;
+        color: #c8a97e;
+        box-shadow: none;
+      }
+      .btn-sm {
+        padding: 9px 18px;
+        font-size: 12px;
+      }
+      .section-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #c8a97e;
+        margin-bottom: 10px;
+      }
+      .account-page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 32px 96px;
+      }
+      .account-page h1 {
+        font-size: clamp(28px, 4vw, 42px);
+        margin-bottom: 8px;
+      }
+      .account-sub {
+        color: #6b6b6b;
+        font-size: 14px;
+        margin-bottom: 40px;
+      }
+      .account-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 32px;
+        align-items: start;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e8e4de;
+        border-radius: 16px;
+        padding: 26px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+      }
+      .profile-head {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+      .avatar {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: #2d2d2d;
+        color: #fff;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 0.12em;
+      }
+      .profile-info h3 {
+        font-family: "Poppins", sans-serif;
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      .profile-meta {
+        font-size: 13px;
+        color: #6b6b6b;
+      }
+      .profile-actions {
+        margin-left: auto;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 18px;
+      }
+      .form-group label {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #6b6b6b;
+      }
+      .form-group input,
+      .form-group select {
+        padding: 12px 16px;
+        border: 1.5px solid #e8e4de;
+        border-radius: 8px;
+        background: #fff;
+        color: #2d2d2d;
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: #c8a97e;
+        box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.15);
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .orders-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .orders-count {
+        font-size: 12px;
+        color: #6b6b6b;
+      }
+      .order-card {
+        border: 1px solid #e8e4de;
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 16px;
+        background: #fff;
+      }
+      .order-card.open {
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      }
+      .order-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .order-id {
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .order-date {
+        font-size: 12px;
+        color: #6b6b6b;
+        margin-top: 2px;
+      }
+      .order-meta {
+        font-size: 13px;
+        color: #6b6b6b;
+        margin: 10px 0 14px;
+      }
+      .status-chip {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .status-processing {
+        background: rgba(200, 169, 126, 0.15);
+        color: #b3833f;
+      }
+      .status-packed {
+        background: rgba(52, 152, 219, 0.15);
+        color: #2c82c9;
+      }
+      .status-shipped {
+        background: rgba(39, 174, 96, 0.15);
+        color: #1d8f54;
+      }
+      .status-delivered {
+        background: rgba(46, 204, 113, 0.18);
+        color: #1f8f57;
+      }
+      .order-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 8px;
+      }
+      .order-details {
+        display: none;
+        border-top: 1px solid #e8e4de;
+        padding-top: 16px;
+      }
+      .order-card.open .order-details {
+        display: block;
+      }
+      .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .detail-block h4 {
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #6b6b6b;
+        margin-bottom: 8px;
+      }
+      .detail-block p {
+        font-size: 13px;
+        color: #2d2d2d;
+        margin-bottom: 4px;
+      }
+      .items-list {
+        display: grid;
+        gap: 10px;
+      }
+      .item-row {
+        display: grid;
+        grid-template-columns: 56px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        border: 1px solid #e8e4de;
+        border-radius: 10px;
+        padding: 10px 12px;
+        background: #faf9f7;
+      }
+      .item-row img {
+        width: 56px;
+        height: 72px;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+      .item-name {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .item-meta {
+        font-size: 11px;
+        color: #6b6b6b;
+      }
+      .item-price {
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .totals {
+        margin-top: 14px;
+        border-top: 1px solid #e8e4de;
+        padding-top: 12px;
+      }
+      .sum-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #6b6b6b;
+        margin-bottom: 8px;
+      }
+      .sum-row.total {
+        font-size: 15px;
+        font-weight: 700;
+        color: #2d2d2d;
+      }
+      .status-track {
+        margin-top: 16px;
+        border-left: 2px solid #e8e4de;
+        padding-left: 16px;
+      }
+      .status-step {
+        position: relative;
+        margin-bottom: 12px;
+      }
+      .status-step::before {
+        content: "";
+        position: absolute;
+        left: -22px;
+        top: 4px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #e8e4de;
+      }
+      .status-step.done::before {
+        background: #27ae60;
+      }
+      .status-step.active::before {
+        background: #c8a97e;
+      }
+      .status-step span {
+        font-size: 12px;
+        color: #6b6b6b;
+        display: block;
+      }
+      .empty-orders {
+        text-align: center;
+        padding: 48px 20px;
+        border: 1px dashed #e8e4de;
+        border-radius: 14px;
+        color: #6b6b6b;
+      }
+      @media (max-width: 980px) {
+        .account-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 640px) {
+        .account-page {
+          padding: 32px 20px 64px;
+        }
+        .form-row,
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+        .nav-inner {
+          padding: 0 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">VELORA</a>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html" style="position: relative"
+            >Cart<span
+              class="cart-badge"
+              style="position: absolute; top: -8px; right: -16px"
+              >0</span
+            ></a
+          >
+          <a href="profile.html" class="btn btn-sm active" id="authLink"
+            >Account</a
+          >
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px">
+          <a href="cart.html" class="cart-wrap">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#2D2D2D"
+              stroke-width="1.8"
+            >
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+            <span class="cart-badge">0</span>
+          </a>
+          <button class="hamburger" id="menuToggle">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a><a href="products.html">Products</a
+        ><a href="cart.html">Cart</a><a href="profile.html" id="mobileAuthLink"
+          >Account</a
+        >
+      </div>
+    </nav>
+
+    <main class="account-page">
+      <div class="section-label">My Account</div>
+      <h1>Profile &amp; Orders</h1>
+      <p class="account-sub">
+        Update your details, manage addresses, and track orders in one place.
+      </p>
+      <div class="account-grid">
+        <section class="card">
+          <div class="profile-head">
+            <div class="avatar" id="profileAvatar">VM</div>
+            <div class="profile-info">
+              <h3 id="profileName">Velora Member</h3>
+              <div class="profile-meta" id="profileMeta">+91 0000000000</div>
+            </div>
+            <div class="profile-actions">
+              <button class="btn btn-sm btn-outline" onclick="logout()">
+                Logout
+              </button>
+            </div>
+          </div>
+          <div class="section-label">Profile Details</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="fullName" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="email" placeholder="you@email.com" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone *</label>
+              <input
+                type="tel"
+                id="phone"
+                placeholder="10-digit number"
+                maxlength="10"
+              />
+            </div>
+            <div class="form-group">
+              <label>Pincode</label>
+              <input type="text" id="pincode" placeholder="400001" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input
+              type="text"
+              id="address"
+              placeholder="House No., Street, Locality"
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" id="city" placeholder="Mumbai" />
+            </div>
+            <div class="form-group">
+              <label>State</label>
+              <select id="state">
+                <option value="">Select State</option>
+                <option>Maharashtra</option>
+                <option>Delhi</option>
+                <option>Karnataka</option>
+                <option>Tamil Nadu</option>
+                <option>Gujarat</option>
+                <option>Rajasthan</option>
+                <option>West Bengal</option>
+                <option>Uttar Pradesh</option>
+                <option>Telangana</option>
+                <option>Kerala</option>
+                <option>Punjab</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Landmark (Optional)</label>
+            <input
+              type="text"
+              id="landmark"
+              placeholder="Near Metro Station"
+            />
+          </div>
+          <button class="btn" style="width: 100%" onclick="saveProfile()">
+            Save Changes
+          </button>
+        </section>
+
+        <section class="card">
+          <div class="orders-head">
+            <div>
+              <div class="section-label">Order History</div>
+              <h2 style="font-size: 24px">My Orders</h2>
+            </div>
+            <div class="orders-count" id="ordersCount">0 orders</div>
+          </div>
+          <div id="ordersList"></div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      function getCart() {
+        return JSON.parse(localStorage.getItem("velora_cart") || "[]");
+      }
+      function updateBadge() {
+        var n = getCart().reduce(function (s, i) {
+          return s + i.qty;
+        }, 0);
+        document.querySelectorAll(".cart-badge").forEach(function (el) {
+          el.textContent = n;
+          el.style.display = n > 0 ? "flex" : "none";
+        });
+      }
+      function toast(msg) {
+        var e = document.querySelector(".v-toast");
+        if (e) e.remove();
+        var t = document.createElement("div");
+        t.className = "v-toast";
+        t.innerHTML = "&#10003; " + msg;
+        t.style.cssText =
+          "position:fixed;bottom:32px;right:32px;z-index:9999;background:#2D2D2D;color:#fff;padding:14px 22px;border-radius:8px;font-family:Poppins,sans-serif;font-size:14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.18)";
+        document.body.appendChild(t);
+        setTimeout(function () {
+          t.style.opacity = "0";
+          t.style.transition = "opacity .3s";
+          setTimeout(function () {
+            t.remove();
+          }, 300);
+        }, 2500);
+      }
+      function getUser() {
+        try {
+          return JSON.parse(localStorage.getItem("velora_user") || "{}");
+        } catch (e) {
+          return {};
+        }
+      }
+      function getProfile() {
+        try {
+          return JSON.parse(localStorage.getItem("velora_profile") || "null");
+        } catch (e) {
+          return null;
+        }
+      }
+      function saveProfileData(profile) {
+        localStorage.setItem("velora_profile", JSON.stringify(profile));
+      }
+      function getOrders() {
+        try {
+          return JSON.parse(localStorage.getItem("velora_orders") || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function saveOrders(orders) {
+        localStorage.setItem("velora_orders", JSON.stringify(orders));
+      }
+      function makeUid() {
+        return "U-" + Math.floor(100000 + Math.random() * 900000);
+      }
+      function syncAuthLinks() {
+        var user = getUser();
+        var loggedIn = user && user.loggedIn;
+        var link = document.getElementById("authLink");
+        var mobile = document.getElementById("mobileAuthLink");
+        if (!loggedIn) {
+          if (link) {
+            link.textContent = "Login";
+            link.href = "login.html";
+          }
+          if (mobile) {
+            mobile.textContent = "Login";
+            mobile.href = "login.html";
+          }
+        }
+      }
+      function formatCurrency(amount) {
+        return "&#8377;" + Number(amount || 0).toLocaleString("en-IN");
+      }
+      function formatDate(value) {
+        if (!value) return "";
+        var d = new Date(value);
+        if (Number.isNaN(d.getTime())) return "";
+        return d.toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        });
+      }
+      function addDays(date, days) {
+        var d = new Date(date.getTime());
+        d.setDate(d.getDate() + days);
+        return d;
+      }
+      function normalizeTimeline(order) {
+        if (order.timeline && order.timeline.length) return order.timeline;
+        var base = order.createdAt ? new Date(order.createdAt) : new Date();
+        return [
+          { status: "Processing", at: base.toISOString() },
+          { status: "Packed", at: addDays(base, 1).toISOString() },
+          { status: "Shipped", at: addDays(base, 2).toISOString() },
+          { status: "Delivered", at: addDays(base, 4).toISOString() },
+        ];
+      }
+      function getCurrentStatus(timeline) {
+        var now = Date.now();
+        var current = timeline[0];
+        timeline.forEach(function (step) {
+          if (new Date(step.at).getTime() <= now) current = step;
+        });
+        return current.status;
+      }
+      function statusClass(status) {
+        switch (status) {
+          case "Packed":
+            return "status-packed";
+          case "Shipped":
+            return "status-shipped";
+          case "Delivered":
+            return "status-delivered";
+          default:
+            return "status-processing";
+        }
+      }
+      function buildStatusTrack(timeline) {
+        var now = Date.now();
+        var currentIndex = 0;
+        timeline.forEach(function (step, idx) {
+          if (new Date(step.at).getTime() <= now) currentIndex = idx;
+        });
+        return (
+          '<div class="status-track">' +
+          timeline
+            .map(function (step, idx) {
+              var cls = "";
+              if (idx < currentIndex) cls = "done";
+              else if (idx === currentIndex) cls = "active";
+              return (
+                '<div class="status-step ' +
+                cls +
+                '"><strong>' +
+                step.status +
+                '</strong><span>' +
+                formatDate(step.at) +
+                "</span></div>"
+              );
+            })
+            .join("") +
+          "</div>"
+        );
+      }
+      function logout() {
+        localStorage.removeItem("velora_user");
+        toast("Logged out successfully");
+        setTimeout(function () {
+          location.href = "index.html";
+        }, 800);
+      }
+      function applyProfile(profile) {
+        document.getElementById("fullName").value = profile.name || "";
+        document.getElementById("email").value = profile.email || "";
+        document.getElementById("phone").value = profile.phone || "";
+        document.getElementById("pincode").value = profile.pincode || "";
+        document.getElementById("address").value = profile.address || "";
+        document.getElementById("city").value = profile.city || "";
+        document.getElementById("state").value = profile.state || "";
+        document.getElementById("landmark").value = profile.landmark || "";
+        document.getElementById("profileName").textContent =
+          profile.name || "Velora Member";
+        var meta = profile.email || profile.phone || "";
+        document.getElementById("profileMeta").textContent = meta;
+        var initials = (profile.name || "Velora Member")
+          .split(" ")
+          .filter(Boolean)
+          .slice(0, 2)
+          .map(function (p) {
+            return p[0].toUpperCase();
+          })
+          .join("");
+        document.getElementById("profileAvatar").textContent = initials || "VM";
+      }
+      function saveProfile() {
+        var name = document.getElementById("fullName").value.trim();
+        var email = document.getElementById("email").value.trim();
+        var phone = document.getElementById("phone").value.trim();
+        var pincode = document.getElementById("pincode").value.trim();
+        var address = document.getElementById("address").value.trim();
+        var city = document.getElementById("city").value.trim();
+        var state = document.getElementById("state").value;
+        var landmark = document.getElementById("landmark").value.trim();
+        if (!name) {
+          toast("Please enter your full name");
+          return;
+        }
+        if (email && !/^\S+@\S+\.\S+$/.test(email)) {
+          toast("Please enter a valid email");
+          return;
+        }
+        if (!/^\d{10}$/.test(phone)) {
+          toast("Please enter a valid 10-digit phone number");
+          return;
+        }
+        if (pincode && !/^\d{6}$/.test(pincode)) {
+          toast("Please enter a valid 6-digit pincode");
+          return;
+        }
+        var user = getUser();
+        var profile = getProfile() || {};
+        if (!user.uid) {
+          user.uid = profile.uid || makeUid();
+        }
+        profile.uid = user.uid;
+        profile.name = name;
+        profile.email = email;
+        profile.phone = phone;
+        profile.pincode = pincode;
+        profile.address = address;
+        profile.city = city;
+        profile.state = state;
+        profile.landmark = landmark;
+        saveProfileData(profile);
+        localStorage.setItem(
+          "velora_user",
+          JSON.stringify({
+            loggedIn: true,
+            uid: user.uid,
+            phone: phone,
+          }),
+        );
+        var orders = getOrders();
+        if (orders.length) {
+          orders.forEach(function (order) {
+            if (order.userId === user.uid) order.userPhone = phone;
+          });
+          saveOrders(orders);
+        }
+        applyProfile(profile);
+        toast("Profile updated");
+      }
+      function renderOrders() {
+        var user = getUser();
+        var orders = getOrders();
+        var visible = orders.filter(function (order) {
+          if (user.uid && order.userId) return order.userId === user.uid;
+          if (user.phone && order.userPhone) return order.userPhone === user.phone;
+          return true;
+        });
+        var list = document.getElementById("ordersList");
+        document.getElementById("ordersCount").textContent =
+          visible.length + " order" + (visible.length !== 1 ? "s" : "");
+        if (!visible.length) {
+          list.innerHTML =
+            '<div class="empty-orders">No orders yet. Start exploring the collection and place your first order.</div>';
+          return;
+        }
+        var updated = false;
+        list.innerHTML = visible
+          .map(function (order, idx) {
+            var timeline = normalizeTimeline(order);
+            if (!order.timeline || order.timeline.length === 0) {
+              order.timeline = timeline;
+              updated = true;
+            }
+            var current = getCurrentStatus(timeline);
+            var safeId = "order" + idx;
+            var itemsCount = order.items
+              ? order.items.reduce(function (s, i) {
+                  return s + i.qty;
+                }, 0)
+              : 0;
+            var itemSubtotal = order.items
+              ? order.items.reduce(function (s, i) {
+                  return s + i.price * i.qty;
+                }, 0)
+              : 0;
+            var subtotal =
+              order.totals && order.totals.subtotal !== undefined
+                ? order.totals.subtotal
+                : itemSubtotal;
+            var shipping =
+              order.totals && order.totals.shipping !== undefined
+                ? order.totals.shipping
+                : subtotal >= 2999
+                  ? 0
+                  : 149;
+            var total =
+              order.totals && order.totals.total !== undefined
+                ? order.totals.total
+                : subtotal + shipping;
+            var paymentText = order.paymentMethod === "online"
+              ? "Online Payment"
+              : "Cash on Delivery";
+            var address = order.shipping || {};
+            return (
+              '<div class="order-card" id="' +
+              safeId +
+              '" data-order-id="' +
+              order.id +
+              '">' +
+              '<div class="order-head">' +
+              '<div><div class="order-id">Order #' +
+              order.id +
+              '</div><div class="order-date">Placed on ' +
+              formatDate(order.createdAt) +
+              "</div></div>" +
+              '<span class="status-chip ' +
+              statusClass(current) +
+              '">' +
+              current +
+              "</span></div>" +
+              '<div class="order-meta">' +
+              itemsCount +
+              " item" +
+              (itemsCount !== 1 ? "s" : "") +
+              " &middot; " +
+              formatCurrency(total) +
+              "</div>" +
+              '<div class="order-actions"><button class="btn btn-sm btn-outline" onclick="toggleOrder(\'' +
+              safeId +
+              '\')">View Details</button></div>' +
+              '<div class="order-details">' +
+              '<div class="detail-grid">' +
+              '<div class="detail-block"><h4>Shipping</h4><p>' +
+              (address.name || "") +
+              "</p><p>" +
+              (address.address || "") +
+              "</p><p>" +
+              [address.city, address.state, address.pincode]
+                .filter(Boolean)
+                .join(", ") +
+              "</p><p>" +
+              (address.phone || "") +
+              "</p></div>" +
+              '<div class="detail-block"><h4>Payment</h4><p>' +
+              paymentText +
+              "</p><p>Order Total: " +
+              formatCurrency(total) +
+              "</p></div>" +
+              "</div>" +
+              '<div class="items-list">' +
+              (order.items || [])
+                .map(function (item) {
+                  return (
+                    '<div class="item-row"><img src="' +
+                    item.image +
+                    '" alt="' +
+                    item.name +
+                    '"/><div><div class="item-name">' +
+                    item.name +
+                    '</div><div class="item-meta">Size: ' +
+                    item.size +
+                    " &middot; Qty: " +
+                    item.qty +
+                    "</div></div><div class="item-price">" +
+                    formatCurrency(item.price * item.qty) +
+                    "</div></div>"
+                  );
+                })
+                .join("") +
+              "</div>" +
+              '<div class="totals">' +
+              '<div class="sum-row"><span>Subtotal</span><span>' +
+              formatCurrency(subtotal) +
+              "</span></div>" +
+              '<div class="sum-row"><span>Shipping</span><span>' +
+              (shipping === 0 ? "Free" : formatCurrency(shipping)) +
+              "</span></div>" +
+              '<div class="sum-row total"><span>Total</span><span>' +
+              formatCurrency(total) +
+              "</span></div></div>" +
+              buildStatusTrack(timeline) +
+              "</div></div>"
+            );
+          })
+          .join("");
+        if (updated) saveOrders(orders);
+        var openId = new URLSearchParams(location.search).get("order");
+        if (openId) {
+          var target = Array.from(document.querySelectorAll(".order-card")).find(
+            function (card) {
+              return card.dataset.orderId === openId;
+            },
+          );
+          if (target) {
+            target.classList.add("open");
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      }
+      function toggleOrder(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.toggle("open");
+      }
+      document
+        .getElementById("menuToggle")
+        .addEventListener("click", function () {
+          document.getElementById("mobileMenu").classList.toggle("open");
+        });
+      updateBadge();
+      syncAuthLinks();
+      var user = getUser();
+      if (!user.loggedIn) {
+        location.href = "login.html";
+      } else {
+        if (!user.uid) {
+          user.uid = makeUid();
+          localStorage.setItem("velora_user", JSON.stringify(user));
+        }
+        var profile = getProfile();
+        if (!profile) {
+          profile = {
+            uid: user.uid,
+            name: "Velora Member",
+            email: "",
+            phone: user.phone || "",
+            address: "",
+            city: "",
+            state: "",
+            pincode: "",
+            landmark: "",
+          };
+          saveProfileData(profile);
+        } else if (!profile.uid) {
+          profile.uid = user.uid;
+          saveProfileData(profile);
+        }
+        if (!profile.phone && user.phone) {
+          profile.phone = user.phone;
+          saveProfileData(profile);
+        }
+        applyProfile(profile);
+        renderOrders();
+      }
+    </script>
+  </body>
+</html>

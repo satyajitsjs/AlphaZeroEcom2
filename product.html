@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -1047,6 +1047,45 @@
           }
         }
       }
+      var IMG_PLACEHOLDER =
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(
+          "<svg xmlns='http://www.w3.org/2000/svg' width='600' height='800' viewBox='0 0 600 800'><rect width='100%' height='100%' fill='#f2ece6'/><rect x='24' y='24' width='552' height='752' fill='none' stroke='#e0d9d1' stroke-width='2'/><text x='50%' y='50%' text-anchor='middle' fill='#b3a99c' font-family='Poppins, sans-serif' font-size='20'>Image unavailable</text></svg>"
+        );
+      function applyImageFallback(root) {
+        var scope = root || document;
+        var imgs = scope.querySelectorAll ? scope.querySelectorAll("img") : [];
+        imgs.forEach(function (img) {
+          if (img.dataset.fallbackApplied) return;
+          img.dataset.fallbackApplied = "1";
+          if (!img.getAttribute("src")) {
+            img.src = IMG_PLACEHOLDER;
+          }
+          if (img.complete && img.naturalWidth === 0) {
+            img.src = IMG_PLACEHOLDER;
+          }
+          img.addEventListener("error", function () {
+            if (img.src !== IMG_PLACEHOLDER) img.src = IMG_PLACEHOLDER;
+          });
+        });
+      }
+      function initImageFallback() {
+        applyImageFallback(document);
+        if (!("MutationObserver" in window)) return;
+        var obs = new MutationObserver(function (muts) {
+          muts.forEach(function (m) {
+            m.addedNodes.forEach(function (node) {
+              if (node.nodeType !== 1) return;
+              if (node.tagName === "IMG") {
+                applyImageFallback(node.parentElement || document);
+              } else {
+                applyImageFallback(node);
+              }
+            });
+          });
+        });
+        obs.observe(document.body, { childList: true, subtree: true });
+      }
       document
         .getElementById("menuToggle")
         .addEventListener("click", () =>
@@ -1054,6 +1093,7 @@
         );
       updateBadge();
       syncAuthLinks();
+      initImageFallback();
       const prodId = parseInt(new URLSearchParams(location.search).get("id"));
       const product = PRODUCTS.find((p) => p.id === prodId);
       let selSize = "M",

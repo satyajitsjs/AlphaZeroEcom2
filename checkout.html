@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Checkout – VELORA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#F8F5F2;color:#2D2D2D;font-family:'Poppins',sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;width:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
+.navbar{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 1px 0 #E8E4DE,0 2px 16px rgba(0,0,0,.05);height:64px;display:flex;align-items:center}
+.nav-inner{max-width:1280px;margin:0 auto;width:100%;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:.12em}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#6B6B6B;transition:color .2s}
+.nav-links a:hover{color:#2D2D2D}
+.cart-wrap{position:relative;display:inline-flex;align-items:center}
+.cart-badge{position:absolute;top:-8px;right:-10px;background:#C8A97E;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:#2D2D2D;margin:5px 0}
+.mobile-menu{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;border-top:1px solid #E8E4DE;padding:16px 32px 24px;box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:99}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:12px 0;border-bottom:1px solid #E8E4DE;font-size:14px;font-weight:500;color:#2D2D2D}
+.mobile-menu a:last-child{border:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 28px;background:#C8A97E;color:#fff;border:none;border-radius:6px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s}
+.btn:hover{background:#B89666;transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,169,126,.32)}
+.btn-outline{background:transparent;color:#2D2D2D;border:1.5px solid #E8E4DE}
+.btn-outline:hover{background:#F8F5F2;border-color:#C8A97E;color:#C8A97E;box-shadow:none}
+.btn-sm{padding:9px 18px;font-size:12px}
+.btn-lg{padding:15px 36px;font-size:14px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C8A97E;margin-bottom:10px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.form-group label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B6B6B}
+.form-group input,.form-group select{padding:12px 16px;border:1.5px solid #E8E4DE;border-radius:8px;background:#fff;color:#2D2D2D;font-family:'Poppins',sans-serif;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+.form-group input:focus,.form-group select:focus{border-color:#C8A97E;box-shadow:0 0 0 3px rgba(200,169,126,.15)}
+/* Checkout page */
+.checkout-page{max-width:1200px;margin:0 auto;padding:48px 32px 96px}
+.checkout-page h1{font-size:clamp(28px,4vw,40px);margin-bottom:6px}
+.checkout-sub{color:#6B6B6B;font-size:14px;margin-bottom:48px}
+.progress-bar{display:flex;align-items:center;gap:0;margin-bottom:40px}
+.prog-step{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:#6B6B6B}
+.prog-num{width:28px;height:28px;border-radius:50%;border:2px solid #E8E4DE;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;transition:all .3s}
+.prog-step.active .prog-num{background:#C8A97E;border-color:#C8A97E;color:#fff}
+.prog-step.active{color:#2D2D2D}
+.prog-step.done .prog-num{background:#27ae60;border-color:#27ae60;color:#fff}
+.prog-line{flex:1;height:2px;background:#E8E4DE;margin:0 12px;max-width:80px}
+.prog-line.done{background:#C8A97E}
+.checkout-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+.form-section{background:#fff;border:1px solid #E8E4DE;border-radius:16px;padding:28px;margin-bottom:20px}
+.form-section h3{font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #E8E4DE;display:flex;align-items:center;gap:10px}
+.step-num-badge{width:24px;height:24px;border-radius:50%;background:#C8A97E;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pay-opt{display:flex;align-items:center;gap:14px;padding:16px 18px;border:2px solid #E8E4DE;border-radius:10px;cursor:pointer;transition:all .2s;margin-bottom:12px}
+.pay-opt:hover{border-color:#C8A97E}
+.pay-opt.selected{border-color:#C8A97E;background:rgba(200,169,126,.06)}
+.radio-circle{width:20px;height:20px;border-radius:50%;border:2px solid #E8E4DE;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.pay-opt.selected .radio-circle{border-color:#C8A97E}
+.radio-dot{width:10px;height:10px;border-radius:50%;background:#C8A97E;display:none}
+.pay-opt.selected .radio-dot{display:block}
+.opt-title{font-size:14px;font-weight:500}
+.opt-desc{font-size:12px;color:#6B6B6B;margin-top:2px}
+.opt-icon{margin-left:auto;font-size:22px}
+.card-fields{margin-top:20px;display:none}
+.card-fields.show{display:block}
+/* Order sidebar */
+.order-sidebar{background:#fff;border:1px solid #E8E4DE;border-radius:16px;padding:28px;position:sticky;top:88px}
+.order-sidebar h3{font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #E8E4DE}
+.order-item{display:flex;gap:12px;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #E8E4DE}
+.order-item:last-of-type{border-bottom:none}
+.order-item img{width:56px;height:72px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.oi-name{font-size:13px;font-weight:500;margin-bottom:3px}
+.oi-meta{font-size:11px;color:#6B6B6B}
+.oi-price{font-size:14px;font-weight:600;white-space:nowrap;margin-left:auto}
+.sum-row{display:flex;justify-content:space-between;font-size:13px;color:#6B6B6B;margin-bottom:10px}
+.sum-row.total{font-size:16px;font-weight:700;color:#2D2D2D;margin-top:8px;padding-top:12px;border-top:1px solid #E8E4DE}
+.sum-row .val{color:#2D2D2D;font-weight:500}
+/* Success overlay */
+.success-overlay{display:none;position:fixed;inset:0;z-index:9998;background:rgba(248,245,242,.96);align-items:center;justify-content:center;text-align:center;padding:32px}
+.success-overlay.show{display:flex}
+.success-card{background:#fff;border-radius:20px;padding:56px 48px;box-shadow:0 24px 80px rgba(0,0,0,.12);max-width:480px;width:100%}
+.success-icon{font-size:56px;margin-bottom:20px}
+.success-card h2{font-size:30px;margin-bottom:10px}
+.success-card p{color:#6B6B6B;margin-bottom:8px}
+.order-num{color:#C8A97E;font-weight:600;margin-bottom:32px!important}
+footer{background:#2D2D2D;color:#c8c8c8;padding:64px 32px 32px}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:48px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:24px;color:#fff;letter-spacing:.12em;margin-bottom:14px}
+.footer-brand p{font-size:14px;color:#999;line-height:1.7;max-width:240px}
+footer h4{font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:16px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:10px}
+footer ul li a{font-size:14px;color:#999;transition:color .2s}
+footer ul li a:hover{color:#C8A97E}
+.footer-bottom{max-width:1280px;margin:48px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:13px;color:#666}
+.social-icons{display:flex;gap:14px}
+.social-icons a{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;transition:background .2s,color .2s}
+.social-icons a:hover{background:#C8A97E;border-color:#C8A97E;color:#fff}
+@media(max-width:900px){.checkout-grid{grid-template-columns:1fr}.order-sidebar{position:static;order:-1}}
+@media(max-width:640px){.checkout-page{padding:28px 20px 64px}.form-row{grid-template-columns:1fr}.success-card{padding:40px 28px}.nav-inner{padding:0 20px}.nav-links{display:none}.hamburger{display:block}.footer-inner{grid-template-columns:1fr!important;gap:28px}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">VELORA</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="products.html">Products</a>
+      <a href="cart.html" style="position:relative">Cart<span class="cart-badge" style="position:absolute;top:-8px;right:-16px">0</span></a>
+      <a href="login.html" class="btn btn-sm">Login</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <button class="hamburger" id="menuToggle"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu"><a href="index.html">Home</a><a href="products.html">Products</a><a href="cart.html">Cart</a><a href="login.html">Login</a></div>
+</nav>
+<main class="checkout-page">
+  <div class="section-label">Almost There</div>
+  <h1>Checkout</h1>
+  <p class="checkout-sub">Complete your order below</p>
+  <div class="progress-bar">
+    <div class="prog-step done"><div class="prog-num">✓</div><span>Cart</span></div>
+    <div class="prog-line done"></div>
+    <div class="prog-step active"><div class="prog-num">2</div><span>Delivery</span></div>
+    <div class="prog-line"></div>
+    <div class="prog-step"><div class="prog-num">3</div><span>Payment</span></div>
+    <div class="prog-line"></div>
+    <div class="prog-step"><div class="prog-num">4</div><span>Confirm</span></div>
+  </div>
+  <div class="checkout-grid">
+    <div>
+      <div class="form-section">
+        <h3><span class="step-num-badge">1</span>Delivery Details</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Full Name *</label><input type="text" id="fullName" placeholder="Priya Sharma"/></div>
+          <div class="form-group"><label>Mobile Number *</label><input type="tel" id="chkPhone" placeholder="10-digit number" maxlength="10"/></div>
+        </div>
+        <div class="form-group"><label>Address Line *</label><input type="text" id="address" placeholder="House No., Street, Locality"/></div>
+        <div class="form-row">
+          <div class="form-group"><label>City *</label><input type="text" id="city" placeholder="Mumbai"/></div>
+          <div class="form-group"><label>State *</label>
+            <select id="state">
+              <option value="">Select State</option>
+              <option>Maharashtra</option><option>Delhi</option><option>Karnataka</option><option>Tamil Nadu</option><option>Gujarat</option><option>Rajasthan</option><option>West Bengal</option><option>Uttar Pradesh</option><option>Telangana</option><option>Kerala</option><option>Punjab</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Pincode *</label><input type="text" id="pincode" placeholder="400001" maxlength="6"/></div>
+          <div class="form-group"><label>Landmark (Optional)</label><input type="text" id="landmark" placeholder="Near Metro Station"/></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <h3><span class="step-num-badge">2</span>Payment Method</h3>
+        <div class="pay-opt selected" id="codOpt" onclick="selPay('cod')"><div class="radio-circle"><div class="radio-dot"></div></div><div><div class="opt-title">Cash on Delivery</div><div class="opt-desc">Pay when your order arrives</div></div><span class="opt-icon">💵</span></div>
+        <div class="pay-opt" id="onlineOpt" onclick="selPay('online')"><div class="radio-circle"><div class="radio-dot"></div></div><div><div class="opt-title">Online Payment</div><div class="opt-desc">Card, UPI, Net Banking</div></div><span class="opt-icon">💳</span></div>
+        <div class="card-fields" id="cardFields">
+          <div class="form-group" style="margin-top:16px"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"/></div>
+          <div class="form-row">
+            <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM / YY" maxlength="7"/></div>
+            <div class="form-group"><label>CVV</label><input type="text" placeholder="•••" maxlength="3"/></div>
+          </div>
+          <div class="form-group"><label>Name on Card</label><input type="text" placeholder="PRIYA SHARMA"/></div>
+        </div>
+      </div>
+      <button class="btn btn-lg" style="width:100%" onclick="placeOrder()">Place Order →</button>
+    </div>
+    <div class="order-sidebar" id="orderSidebar">
+      <h3>Order Summary</h3>
+      <div id="orderItems"></div>
+      <div style="height:1px;background:#E8E4DE;margin:16px 0"></div>
+      <div class="sum-row"><span>Subtotal</span><span class="val" id="sumSub">₹0</span></div>
+      <div class="sum-row"><span>Shipping</span><span class="val" id="sumShip">₹0</span></div>
+      <div class="sum-row total"><span>Total</span><span id="sumTotal">₹0</span></div>
+    </div>
+  </div>
+</main>
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">🎉</div>
+    <h2>Order Placed!</h2>
+    <p>Thank you for shopping with VELORA.</p>
+    <p class="order-num" id="orderNum">Order #VEL-000000</p>
+    <p style="font-size:14px;margin-bottom:32px">You'll receive a confirmation on your mobile. Delivery in 3–5 business days.</p>
+    <a href="index.html" class="btn" style="width:100%;justify-content:center">Continue Shopping</a>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="footer-logo">VELORA</div><p>Premium fashion for the modern wardrobe.</p></div>
+    <div><h4>Shop</h4><ul><li><a href="products.html">All Products</a></li></ul></div>
+    <div><h4>Help</h4><ul><li><a href="#">Return Policy</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 VELORA. All rights reserved.</p><div class="social-icons"><a href="#">IG</a><a href="#">Pi</a><a href="#">Tw</a></div></div>
+</footer>
+<script>
+function getCart(){return JSON.parse(localStorage.getItem('velora_cart')||'[]')}
+function saveCart(c){localStorage.setItem('velora_cart',JSON.stringify(c));updateBadge()}
+function updateBadge(){var n=getCart().reduce(function(s,i){return s+i.qty},0);document.querySelectorAll('.cart-badge').forEach(function(el){el.textContent=n;el.style.display=n>0?'flex':'none'})}
+function toast(msg){var e=document.querySelector('.v-toast');if(e)e.remove();var t=document.createElement('div');t.className='v-toast';t.innerHTML='✓ '+msg;t.style.cssText='position:fixed;bottom:32px;right:32px;z-index:9999;background:#2D2D2D;color:#fff;padding:14px 22px;border-radius:8px;font-family:Poppins,sans-serif;font-size:14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.18)';document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){t.remove()},300)},2500)}
+document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('mobileMenu').classList.toggle('open')});
+updateBadge();
+var payMethod='cod';
+function selPay(m){
+  payMethod=m;
+  document.getElementById('codOpt').classList.toggle('selected',m==='cod');
+  document.getElementById('onlineOpt').classList.toggle('selected',m==='online');
+  document.getElementById('cardFields').classList.toggle('show',m==='online');
+}
+function fmtCard(input){var v=input.value.replace(/\D/g,'').slice(0,16);input.value=v.replace(/(.{4})/g,'$1 ').trim()}
+function renderSummary(){
+  var cart=getCart();
+  var items=document.getElementById('orderItems');
+  if(cart.length===0){items.innerHTML='<p style="color:#6B6B6B;font-size:14px">Cart is empty. <a href="products.html" style="color:#C8A97E">Shop now</a></p>';return}
+  items.innerHTML=cart.map(function(item){return'<div class="order-item"><img src="'+item.image+'" alt="'+item.name+'"/><div><div class="oi-name">'+item.name+'</div><div class="oi-meta">Size: '+item.size+' · Qty: '+item.qty+'</div></div><div class="oi-price">₹'+(item.price*item.qty).toLocaleString()+'</div></div>'}).join('');
+  var sub=cart.reduce(function(s,i){return s+i.price*i.qty},0);
+  var ship=sub>=2999?0:149;
+  document.getElementById('sumSub').textContent='₹'+sub.toLocaleString();
+  document.getElementById('sumShip').innerHTML=ship===0?'<span style="color:#27ae60">Free</span>':'₹'+ship;
+  document.getElementById('sumTotal').textContent='₹'+(sub+ship).toLocaleString();
+}
+function placeOrder(){
+  var n=document.getElementById('fullName').value.trim();
+  var p=document.getElementById('chkPhone').value.trim();
+  var a=document.getElementById('address').value.trim();
+  var c=document.getElementById('city').value.trim();
+  var s=document.getElementById('state').value;
+  var pin=document.getElementById('pincode').value.trim();
+  if(!n){toast('Please enter your full name');return}
+  if(!/^\d{10}$/.test(p)){toast('Please enter a valid mobile number');return}
+  if(!a){toast('Please enter your address');return}
+  if(!c){toast('Please enter your city');return}
+  if(!s){toast('Please select your state');return}
+  if(!/^\d{6}$/.test(pin)){toast('Please enter a valid 6-digit pincode');return}
+  if(getCart().length===0){toast('Your cart is empty');return}
+  var num='VEL-'+Math.floor(100000+Math.random()*900000);
+  document.getElementById('orderNum').textContent='Order #'+num;
+  localStorage.removeItem('velora_cart');
+  updateBadge();
+  document.getElementById('successOverlay').classList.add('show');
+}
+renderSummary();
+</script>
+</body>
+</html>

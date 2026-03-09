@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Products – VELORA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#F8F5F2;color:#2D2D2D;font-family:'Poppins',sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;width:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
+.navbar{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 1px 0 #E8E4DE,0 2px 16px rgba(0,0,0,.05);height:64px;display:flex;align-items:center}
+.nav-inner{max-width:1280px;margin:0 auto;width:100%;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:.12em;color:#2D2D2D}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#6B6B6B;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:#2D2D2D}
+.cart-wrap{position:relative;display:flex;align-items:center;cursor:pointer}
+.cart-badge{position:absolute;top:-8px;right:-10px;background:#C8A97E;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:#2D2D2D;margin:5px 0}
+.mobile-menu{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;border-top:1px solid #E8E4DE;padding:16px 32px 24px;box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:99}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:12px 0;border-bottom:1px solid #E8E4DE;font-size:14px;font-weight:500;color:#2D2D2D}
+.mobile-menu a:last-child{border:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 28px;background:#C8A97E;color:#fff;border:none;border-radius:6px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s}
+.btn:hover{background:#B89666;transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,169,126,.32)}
+.btn-outline{background:transparent;color:#2D2D2D;border:1.5px solid #E8E4DE}
+.btn-outline:hover{background:#F8F5F2;border-color:#C8A97E;color:#C8A97E;box-shadow:none}
+.btn-sm{padding:9px 18px;font-size:12px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C8A97E;margin-bottom:10px}
+/* Product cards */
+.product-card{background:#fff;border:1px solid #E8E4DE;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s;cursor:pointer}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.1)}
+.img-wrap{aspect-ratio:3/4;overflow:hidden;position:relative}
+.img-wrap img{height:100%;width:100%;object-fit:cover;transition:transform .5s}
+.product-card:hover .img-wrap img{transform:scale(1.06)}
+.badge{position:absolute;top:12px;left:12px;background:#C8A97E;color:#fff;font-size:10px;font-weight:600;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.06em}
+.card-body{padding:16px 18px 20px}
+.cat-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#C8A97E;margin-bottom:6px}
+.card-body h3{font-family:'Poppins',sans-serif;font-size:15px;font-weight:500;margin-bottom:4px}
+.price{font-size:16px;font-weight:600;margin-bottom:14px}
+.card-actions{display:flex;gap:8px}
+.card-actions .btn{flex:1}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+/* Page hero */
+.page-hero{background:linear-gradient(135deg,#f0ece6 0%,#F8F5F2 100%);padding:64px 32px;border-bottom:1px solid #E8E4DE}
+.page-hero-inner{max-width:1280px;margin:0 auto}
+.page-hero h1{font-size:clamp(32px,5vw,56px);margin-bottom:8px}
+.page-hero p{color:#6B6B6B}
+/* Filters */
+.filters-bar{position:sticky;top:64px;z-index:50;background:rgba(248,245,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid #E8E4DE;padding:16px 32px}
+.filters-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.filter-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.filter-tab{padding:8px 18px;border-radius:100px;border:1.5px solid #E8E4DE;background:transparent;cursor:pointer;font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#6B6B6B;transition:all .2s}
+.filter-tab:hover{border-color:#C8A97E;color:#C8A97E}
+.filter-tab.active{background:#2D2D2D;border-color:#2D2D2D;color:#fff}
+.sort-select{padding:9px 16px;border-radius:8px;border:1.5px solid #E8E4DE;background:#fff;color:#6B6B6B;font-family:'Poppins',sans-serif;font-size:13px;cursor:pointer;outline:none}
+.sort-select:focus{border-color:#C8A97E}
+.products-section{padding:48px 32px 96px}
+.products-section .inner{max-width:1280px;margin:0 auto}
+.results-info{font-size:13px;color:#6B6B6B;margin-bottom:28px}
+.results-info span{color:#2D2D2D;font-weight:600}
+/* Footer */
+footer{background:#2D2D2D;color:#c8c8c8;padding:64px 32px 32px}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:48px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:24px;color:#fff;letter-spacing:.12em;margin-bottom:14px}
+.footer-brand p{font-size:14px;line-height:1.7;color:#999;max-width:240px}
+footer h4{font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:16px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:10px}
+footer ul li a{font-size:14px;color:#999;transition:color .2s}
+footer ul li a:hover{color:#C8A97E}
+.footer-bottom{max-width:1280px;margin:48px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:13px;color:#666}
+.social-icons{display:flex;gap:14px}
+.social-icons a{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#999;font-size:14px;transition:background .2s,color .2s,border-color .2s}
+.social-icons a:hover{background:#C8A97E;border-color:#C8A97E;color:#fff}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1024px){.footer-inner{grid-template-columns:1fr 1fr!important;gap:32px}}
+@media(max-width:768px){.nav-inner{padding:0 20px}.nav-links{display:none}.hamburger{display:block}.page-hero{padding:40px 20px}.filters-bar{padding:14px 20px}.products-section{padding:32px 20px 64px}.footer-inner{grid-template-columns:1fr!important;gap:28px}.products-grid{grid-template-columns:repeat(2,1fr)!important;gap:16px}}
+@media(max-width:480px){.products-grid{grid-template-columns:1fr!important}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">VELORA</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html" class="active">Products</a>
+      <a href="cart.html" style="position:relative">Cart<span class="cart-badge" style="position:absolute;top:-8px;right:-16px">0</span></a>
+      <a href="login.html" class="btn btn-sm">Login</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <a href="cart.html" class="cart-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge">0</span>
+      </a>
+      <button class="hamburger" id="menuToggle"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a><a href="products.html">Products</a><a href="cart.html">Cart</a><a href="login.html">Login</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="section-label">The Collection</div>
+    <h1>All Products</h1>
+    <p>Explore the full VELORA range — curated for the modern wardrobe.</p>
+  </div>
+</div>
+
+<div class="filters-bar">
+  <div class="filters-inner">
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-tab active" data-cat="All">All</button>
+      <button class="filter-tab" data-cat="Men">Men</button>
+      <button class="filter-tab" data-cat="Women">Women</button>
+      <button class="filter-tab" data-cat="Streetwear">Streetwear</button>
+      <button class="filter-tab" data-cat="Accessories">Accessories</button>
+    </div>
+    <select class="sort-select" id="sortSelect">
+      <option value="">Sort By</option>
+      <option value="asc">Price: Low to High</option>
+      <option value="desc">Price: High to Low</option>
+    </select>
+  </div>
+</div>
+
+<section class="products-section">
+  <div class="inner">
+    <div class="results-info" id="resultsInfo"></div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="footer-logo">VELORA</div><p>Premium fashion for the modern wardrobe.</p></div>
+    <div><h4>Shop</h4><ul><li><a href="products.html?cat=Men">Men</a></li><li><a href="products.html?cat=Women">Women</a></li><li><a href="products.html?cat=Streetwear">Streetwear</a></li><li><a href="products.html?cat=Accessories">Accessories</a></li></ul></div>
+    <div><h4>About</h4><ul><li><a href="#">Our Story</a></li><li><a href="#">Sustainability</a></li></ul></div>
+    <div><h4>Customer Care</h4><ul><li><a href="#">Return Policy</a></li><li><a href="#">Contact Us</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 VELORA. All rights reserved.</p><div class="social-icons"><a href="#">IG</a><a href="#">Pi</a><a href="#">Tw</a><a href="#">Fb</a></div></div>
+</footer>
+
+<script>
+const PRODUCTS=[{id:1,name:"Linen Relaxed Blazer",price:4999,category:"Women",image:"https://images.unsplash.com/photo-1594938298603-c8148c4b4a2b?w=600&q=80",material:"100% Linen",fit:"Relaxed Fit",care:"Dry Clean Only",badge:"New",description:"A relaxed-fit blazer crafted from premium linen."},{id:2,name:"Structured Wool Coat",price:8999,category:"Women",image:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80",material:"90% Merino Wool, 10% Cashmere",fit:"Tailored Fit",care:"Dry Clean Only",badge:"Bestseller",description:"A timeless structured coat in fine merino wool."},{id:3,name:"Slim Tapered Chinos",price:2799,category:"Men",image:"https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&q=80",material:"98% Cotton, 2% Elastane",fit:"Slim Tapered",care:"Machine Wash Cold",badge:"",description:"Slim tapered chinos with a refined finish."},{id:4,name:"Oxford Button-Down Shirt",price:1999,category:"Men",image:"https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=600&q=80",material:"100% Oxford Cotton",fit:"Regular Fit",care:"Machine Wash Warm",badge:"",description:"A classic Oxford shirt, elevated with premium fabric."},{id:5,name:"Oversized Graphic Hoodie",price:2499,category:"Streetwear",image:"https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=600&q=80",material:"100% Heavyweight Cotton",fit:"Oversized Fit",care:"Machine Wash Cold",badge:"New",description:"Heavyweight oversized hoodie with a bold graphic print."},{id:6,name:"Cargo Utility Pants",price:3299,category:"Streetwear",image:"https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80",material:"100% Ripstop Cotton",fit:"Relaxed Fit",care:"Machine Wash Cold",badge:"",description:"Technical cargo pants with multiple pockets."},{id:7,name:"Leather Minimal Tote",price:5499,category:"Accessories",image:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80",material:"Full-Grain Leather",fit:"One Size",care:"Spot Clean Only",badge:"Bestseller",description:"A clean-lined tote in full-grain leather."},{id:8,name:"Cashmere Knit Scarf",price:1799,category:"Accessories",image:"https://images.unsplash.com/photo-1601924921557-45e6dea0a157?w=600&q=80",material:"100% Pure Cashmere",fit:"One Size",care:"Hand Wash Cold",badge:"",description:"Exceptionally soft pure cashmere scarf."},{id:9,name:"Silk Slip Dress",price:6299,category:"Women",image:"https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&q=80",material:"100% Silk",fit:"Relaxed Slip",care:"Dry Clean Only",badge:"New",description:"A fluid silk slip dress that moves beautifully."},{id:10,name:"Premium Crewneck Sweater",price:2999,category:"Men",image:"https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&q=80",material:"100% Pima Cotton",fit:"Regular Fit",care:"Machine Wash Cold",badge:"",description:"A wardrobe essential in fine Pima cotton."},{id:11,name:"Track Jacket",price:2199,category:"Streetwear",image:"https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80",material:"100% Recycled Polyester",fit:"Relaxed Fit",care:"Machine Wash Cold",badge:"",description:"A clean track jacket with minimal branding."},{id:12,name:"Suede Belt",price:1299,category:"Accessories",image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80",material:"Genuine Suede, Brass Hardware",fit:"Adjustable",care:"Spot Clean",badge:"",description:"A refined suede belt with brass hardware."}];
+function getCart(){return JSON.parse(localStorage.getItem('velora_cart')||'[]')}
+function saveCart(c){localStorage.setItem('velora_cart',JSON.stringify(c));updateBadge()}
+function addToCart(id,size,qty){size=size||'M';qty=qty||1;const cart=getCart();const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const ex=cart.find(i=>i.id===id&&i.size===size);if(ex)ex.qty+=qty;else cart.push({id,name:p.name,price:p.price,image:p.image,size,qty});saveCart(cart);toast(p.name+' added to cart')}
+function updateBadge(){const n=getCart().reduce((s,i)=>s+i.qty,0);document.querySelectorAll('.cart-badge').forEach(el=>{el.textContent=n;el.style.display=n>0?'flex':'none'})}
+function toast(msg){const e=document.querySelector('.v-toast');if(e)e.remove();const t=document.createElement('div');t.className='v-toast';t.innerHTML='✓ '+msg;t.style.cssText='position:fixed;bottom:32px;right:32px;z-index:9999;background:#2D2D2D;color:#fff;padding:14px 22px;border-radius:8px;font-family:Poppins,sans-serif;font-size:14px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.18);animation:toastIn .3s ease';document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300)},2500)}
+document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+updateBadge();
+
+let activeCat='All',activeSort='';
+const urlCat=new URLSearchParams(location.search).get('cat');
+if(urlCat)activeCat=urlCat;
+
+function renderProducts(){
+  let list=activeCat==='All'?[...PRODUCTS]:PRODUCTS.filter(p=>p.category===activeCat);
+  if(activeSort==='asc')list.sort((a,b)=>a.price-b.price);
+  if(activeSort==='desc')list.sort((a,b)=>b.price-a.price);
+  document.getElementById('resultsInfo').innerHTML='Showing <span>'+list.length+'</span> product'+(list.length!==1?'s':'');
+  const g=document.getElementById('productsGrid');g.innerHTML='';
+  list.forEach(p=>{
+    const el=document.createElement('div');el.className='product-card';
+    el.innerHTML=`<div class="img-wrap"><img src="${p.image}" alt="${p.name}" loading="lazy"/>${p.badge?'<span class="badge">'+p.badge+'</span>':''}</div><div class="card-body"><div class="cat-tag">${p.category}</div><h3>${p.name}</h3><div class="price">₹${p.price.toLocaleString()}</div><div class="card-actions"><button class="btn btn-sm" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button><a href="product.html?id=${p.id}" class="btn btn-sm btn-outline" onclick="event.stopPropagation()">View</a></div></div>`;
+    el.addEventListener('click',()=>location.href='product.html?id='+p.id);
+    g.appendChild(el);
+  });
+}
+
+document.querySelectorAll('.filter-tab').forEach(tab=>{
+  if(tab.dataset.cat===activeCat)tab.classList.add('active');
+  else tab.classList.remove('active');
+  tab.addEventListener('click',()=>{
+    activeCat=tab.dataset.cat;
+    document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    renderProducts();
+  });
+});
+document.getElementById('sortSelect').addEventListener('change',e=>{activeSort=e.target.value;renderProducts()});
+renderProducts();
+</script>
+</body>
+</html>
